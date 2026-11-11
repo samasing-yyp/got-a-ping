@@ -1,0 +1,188 @@
+/* got a ping, the site in the game's look: the handheld's lcd panels, the 3x5 pixel font, the class colors,
+   the pastel backdrop behind everything. one game pixel is 2 css px (the font is 16px, 8 per game pixel) */
+@font-face { font-family: "GotAPing"; src: url("gotaping.ttf") format("truetype"); font-display: block; }
+
+:root {
+  --lcd: #0e1016;          /* LCD_BG */
+  --ink: #ebeef5;          /* LCD_INK */
+  --dim: #788096;          /* LCD_DIM */
+  --gold: #ffd65a;         /* LCD_GOLD */
+  --line: #3a3e4e;         /* the hud card's edge */
+  --floor: #1d1d26;        /* COL_FLOOR */
+  --wall: #3a3a4a;         /* COL_WALL */
+  --acc: #ff6eb4;          /* follows the character on the landing */
+  --ds: #c8b4e6;           /* the handheld body, a pastel of --acc */
+  --p: 2px;                /* one game pixel */
+  --pix: "GotAPing", ui-monospace, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html { color-scheme: dark; scroll-behavior: smooth; }
+html[data-lang="es"] [lang="en"], html[data-lang="en"] [lang="es"] { display: none !important; }
+body {
+  margin: 0; min-height: 100vh;
+  font: 16px/22px var(--pix);
+  color: var(--ink);
+  background: #f7f2e6;
+  -webkit-font-smoothing: none; font-smooth: never;
+  text-transform: lowercase;
+  overflow-x: hidden;
+}
+#bg { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; image-rendering: pixelated; }
+canvas, img { image-rendering: pixelated; image-rendering: crisp-edges; }
+a { color: var(--gold); text-decoration: none; }
+a:hover { color: #fff; }
+b, strong { color: #fff; font-weight: normal; }
+h1, h2, h3, h4 { font-weight: normal; margin: 0 0 12px; line-height: 1.2; }
+h2 { font-size: 24px; color: var(--acc); }
+h3 { font-size: 16px; color: var(--gold); margin-top: 14px; }
+h4 { font-size: 16px; color: var(--ink); }
+p { margin: 0 0 10px; }
+.dim { color: var(--dim); }
+.gold { color: var(--gold); }
+code { color: var(--gold); font-family: var(--pix); }
+hr { border: 0; border-top: var(--p) solid var(--line); margin: 16px 0; }
+
+/* a panel, like the hud card: the lcd color, a 1 game px edge, a hard shadow */
+.panel {
+  background: var(--lcd); border: var(--p) solid var(--line);
+  box-shadow: 6px 6px 0 rgba(14, 16, 22, 0.35);
+  padding: 18px 20px; margin: 0 0 22px; min-width: 0;
+}
+
+/* header, the hud card across the top */
+.hud {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 10px 18px; background: var(--lcd); border-bottom: var(--p) solid var(--line);
+  box-shadow: 0 6px 0 rgba(14, 16, 22, 0.25);
+}
+.brand { display: flex; align-items: baseline; gap: 12px; color: var(--ink); font-size: 24px; }
+.brand b { color: var(--acc); }
+.brand-v { font-size: 16px; }
+.nav { display: flex; gap: 6px; flex-wrap: wrap; }
+/* a menu row of the pause list: dim, and white with dark text when it is the one */
+.nav-b {
+  font: inherit; text-transform: inherit; cursor: pointer; border: 0;
+  padding: 6px 10px; background: transparent; color: var(--ink);
+}
+.nav-b:hover { background: var(--line); color: #fff; }
+.nav-b.on { background: var(--ink); color: var(--lcd); }
+.lang { color: var(--dim); border: var(--p) solid var(--line); }
+
+.main { max-width: 1100px; margin: 0 auto; padding: 26px 18px 10px; }
+.foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; max-width: 1100px; margin: 0 auto; padding: 10px 18px 26px; color: var(--lcd); }
+.foot .dim { color: #4a4e60; }
+
+/* ---------- landing */
+.hero { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 28px; align-items: center; margin-bottom: 26px; }
+/* the handheld: a pastel body, two lcd screens, the hinge between */
+.ds { background: var(--ds); padding: 14px; border-radius: 18px; box-shadow: 6px 6px 0 rgba(14, 16, 22, 0.35), inset 0 -6px 0 rgba(0, 0, 0, 0.12); }
+.ds-top, .ds-bot { background: #1a1c24; padding: 10px; border-radius: 10px; }
+.ds-hinge { height: 14px; margin: 6px 10px; background: rgba(0, 0, 0, 0.12); border-radius: 4px; }
+.lcd { background: var(--lcd); padding: 16px; min-height: 150px; }
+.logo { font-size: 48px; line-height: 50px; margin: 6px 0 14px; color: var(--ink); }
+.logo b { color: var(--acc); }
+.tag { margin-bottom: 4px; }
+.menu { display: flex; flex-direction: column; gap: 4px; }
+.menu-row { display: block; padding: 6px 10px; color: var(--ink); }
+.menu-row:hover, .menu-row.sel { background: var(--ink); color: var(--lcd); }
+.menu-row.sel b, .menu-row:hover b { color: var(--lcd); }
+.stage { position: relative; display: flex; flex-direction: column; align-items: center; }
+#cube { width: min(100%, 460px); aspect-ratio: 1; touch-action: none; cursor: grab; }
+#cube:active { cursor: grabbing; }
+.shadow { width: 46%; height: 18px; margin-top: -26px; background: rgba(14, 16, 22, 0.22); border-radius: 50%; }
+.hint { margin-top: 10px; color: #6a6e80; }
+
+/* the character carousel, the handheld's select screen */
+.carousel { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; gap: 12px; align-items: center; }
+.car-arrow { font: 24px var(--pix); background: var(--line); color: var(--ink); border: 0; height: 44px; cursor: pointer; }
+.car-arrow:hover { background: var(--ink); color: var(--lcd); }
+.car-card { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 18px; align-items: start; }
+.car-face { width: 128px; height: 128px; background: var(--floor); border: var(--p) solid var(--acc); }
+.car-name { font-size: 24px; color: var(--acc); margin-bottom: 6px; }
+.car-desc { white-space: pre-line; color: var(--dim); margin: 8px 0; }
+.traits { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; align-items: center; max-width: 340px; }
+.bar { display: flex; gap: 3px; }
+.bar i { width: 12px; height: 8px; background: var(--line); }
+.bar i.on { background: var(--acc); }
+.bar i.over { background: #fff; }
+.faces { display: flex; gap: 4px; margin-top: 8px; }
+.faces i { width: 16px; height: 16px; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.25); }
+.dots { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin-top: 14px; }
+.dots button { width: 10px; height: 10px; padding: 0; border: 0; background: var(--line); cursor: pointer; }
+.dots button.on { background: var(--acc); }
+
+.classes { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px 16px; }
+.cls { display: grid; grid-template-columns: 18px 1fr; gap: 0 8px; align-items: center; }
+.cls .sq { width: 18px; height: 18px; background: var(--c); grid-row: span 2; box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.25); }
+.cls-n { color: var(--c); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.card { display: flex; flex-direction: column; gap: 4px; padding: 12px; border: var(--p) solid var(--line); color: var(--ink); }
+.card:hover { border-color: var(--acc); color: #fff; }
+.card-t { color: var(--ink); }
+.chip { display: inline-block; padding: 2px 8px; background: var(--acc); color: var(--lcd); align-self: flex-start; margin-right: 8px; }
+.chip.post { background: var(--gold); }
+.chip.big { font-size: 24px; padding: 6px 12px; }
+.when { color: var(--dim); }
+
+/* ---------- downloads */
+.dls { display: flex; flex-wrap: wrap; gap: 12px; margin: 14px 0; }
+.dl { display: grid; grid-template-columns: auto auto; gap: 0 16px; padding: 10px 16px; color: var(--lcd); background: var(--ink); box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4); }
+.dl:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.4); color: var(--lcd); }
+.dl.android { background: #50dc8c; }
+.dl.windows { background: #50aaff; }
+.dl.off { background: var(--line); color: var(--dim); box-shadow: none; transform: none; }
+.dl-k { font-size: 24px; grid-row: span 2; align-self: center; }
+.dl-m { opacity: 0.75; }
+.dl.big { padding: 16px 22px; }
+.dl.big .dl-k { font-size: 32px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+ol, ul { margin: 0 0 10px; padding-left: 26px; }
+li { margin: 3px 0; }
+.row-dl .dls { margin: 0; }
+.row-dl .dl { padding: 4px 10px; }
+.row-dl .dl-k { font-size: 16px; }
+
+/* ---------- changelog */
+.log { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 22px; align-items: start; }
+.side { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 6px; max-height: calc(100vh - 100px); overflow: auto; }
+.side a { color: var(--ink); }
+.side a:hover { color: var(--gold); }
+.entry header { display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
+.entry { scroll-margin-top: 80px; }
+.md h2 { font-size: 24px; color: var(--ink); margin-top: 20px; border-bottom: var(--p) solid var(--line); padding-bottom: 6px; }
+.md h3 { color: var(--acc); }
+.md ul ul, .md ol ul { margin-top: 4px; }
+.md li::marker { color: var(--acc); }
+.md blockquote { margin: 10px 0; padding: 8px 14px; border-left: 4px solid var(--acc); background: var(--floor); }
+.md pre { background: var(--floor); padding: 10px; overflow: auto; }
+.tbl { overflow-x: auto; margin: 10px 0; }
+table { border-collapse: collapse; min-width: 100%; }
+th, td { text-align: left; padding: 6px 10px; border-bottom: var(--p) solid var(--line); vertical-align: top; }
+th { color: var(--gold); font-weight: normal; }
+
+/* ---------- smaller screens: everything stacks, the handheld goes under the cube like in touch play */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .stage { order: -1; }
+  .ds { max-width: 460px; width: 100%; margin: 0 auto; }
+  .log { grid-template-columns: 1fr; }
+  .side { position: static; max-height: 220px; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; line-height: 22px; }
+  .hud { padding: 8px 12px; }
+  .brand { font-size: 16px; }
+  .main { padding: 18px 10px 8px; }
+  .panel { padding: 14px 12px; }
+  .logo { font-size: 32px; line-height: 36px; }
+  .car-card { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .traits { margin: 0 auto; }
+  .faces { justify-content: center; }
+  .carousel { grid-template-columns: 32px minmax(0, 1fr) 32px; gap: 6px; }
+  .two { grid-template-columns: 1fr; }
+  .dl { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

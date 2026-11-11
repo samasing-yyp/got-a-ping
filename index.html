@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Got a Ping</title>
+<meta name="description" content="roguelike con @everyone.">
+<meta property="og:title" content="Got a Ping">
+<meta property="og:description" content="roguelike con @everyone.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4' shape-rendering='crispEdges'%3E%3Crect width='4' height='4' fill='%230e1016'/%3E%3Crect x='0' y='0' width='2' height='2' fill='%23ffd500'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23e12d2d'/%3E%3Crect x='2' y='0' width='2' height='2' fill='%2328d2e1'/%3E%3Crect x='0' y='2' width='2' height='2' fill='%23009e60'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/gotaping.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+<script>try { var l = localStorage.getItem('gap_lang') || ((navigator.language || 'es').slice(0, 2) === 'es' ? 'es' : 'en'); document.documentElement.dataset.lang = l; document.documentElement.lang = l; } catch (e) {}</script>
+</head>
+<body data-page="home" data-title-es="Got a Ping" data-title-en="Got a Ping">
+<canvas id="bg" aria-hidden="true"></canvas>
+
+<header class="hud">
+  <a class="brand" href="index.html"><span class="brand-t">got a <b>ping</b></span><span class="brand-v gold">v0.33</span></a>
+  <nav class="nav"><a class="nav-b on" href="index.html"><span lang="es">inicio</span><span lang="en">home</span></a><a class="nav-b" href="downloads.html"><span lang="es">descargas</span><span lang="en">downloads</span></a><a class="nav-b" href="changelog.html"><span lang="es">novedades</span><span lang="en">changelog</span></a><button class="nav-b lang" id="lang" type="button" aria-label="idioma / language"><span lang="es">en</span><span lang="en">es</span></button></nav>
+</header>
+
+<main class="main">
+
+<section class="hero">
+  <div class="ds">
+    <div class="ds-top"><div class="lcd">
+      <p class="logo">got a<br><b>ping</b></p>
+      <p class="dim tag"><span lang="es">un cubo</span><span lang="en">a roguelike on a rolling cube</span></p>
+      <p class="ver gold">v0.33</p>
+    </div></div>
+    <div class="ds-hinge"></div>
+    <div class="ds-bot"><div class="lcd menu">
+      <a class="menu-row sel" href="downloads.html"><span lang="es">descargar</span><span lang="en">download</span> <b>v0.33</b></a>
+      <a class="menu-row" href="changelog.html"><span lang="es">novedades</span><span lang="en">changelog</span></a>
+      <a class="menu-row" href="#chars"><span lang="es">personajes</span><span lang="en">characters</span></a>
+      <a class="menu-row" href="#classes"><span lang="es">colores</span><span lang="en">classes</span></a>
+    </div></div>
+  </div>
+  <div class="stage">
+    <canvas id="cube" aria-label="el cubo de stickers"></canvas>
+    <div class="shadow"></div>
+    <p class="dim hint"><span lang="es">GIRALO.</span><span lang="en">SPIN IT.</span></p>
+  </div>
+</section>
+
+<section class="panel" id="chars">
+  <h2><span lang="es">personajes</span><span lang="en">characters</span></h2>
+  <div class="carousel" id="carousel"><p class="dim"><span lang="es">cargando</span><span lang="en">loading</span></p></div>
+</section>
+
+<section class="panel" id="classes">
+  <h2><span lang="es">14 colores de stickers</span><span lang="en">14 sticker classes</span></h2>
+  <p class="dim"><span lang="es">cada personaje juega con 6 colores en su cubo. completa líneas y caras para sus EFECTOS.</span><span lang="en">every character plays with 6 classes on their cube. complete lines and faces for their bonuses.</span></p>
+  <ul class="classes"><li class="cls" style="--c:rgb(245,245,245)"><span class="sq"></span><span class="cls-n"><span lang="es">blanco</span><span lang="en">white</span></span><span class="dim"><span lang="es">frio</span><span lang="en">frost</span></span></li><li class="cls" style="--c:rgb(255,213,0)"><span class="sq"></span><span class="cls-n"><span lang="es">amarillo</span><span lang="en">yellow</span></span><span class="dim"><span lang="es">economia</span><span lang="en">economy</span></span></li><li class="cls" style="--c:rgb(225,45,45)"><span class="sq"></span><span class="cls-n"><span lang="es">rojo</span><span lang="en">red</span></span><span class="dim"><span lang="es">alcance</span><span lang="en">range</span></span></li><li class="cls" style="--c:rgb(255,120,0)"><span class="sq"></span><span class="cls-n"><span lang="es">naranja</span><span lang="en">orange</span></span><span class="dim"><span lang="es">quemadura</span><span lang="en">burn</span></span></li><li class="cls" style="--c:rgb(0,81,186)"><span class="sq"></span><span class="cls-n"><span lang="es">azul</span><span lang="en">blue</span></span><span class="dim"><span lang="es">critico</span><span lang="en">crit</span></span></li><li class="cls" style="--c:rgb(0,158,96)"><span class="sq"></span><span class="cls-n"><span lang="es">verde</span><span lang="en">green</span></span><span class="dim"><span lang="es">invocacion</span><span lang="en">summoning</span></span></li><li class="cls" style="--c:rgb(140,60,210)"><span class="sq"></span><span class="cls-n"><span lang="es">morado</span><span lang="en">purple</span></span><span class="dim"><span lang="es">veneno</span><span lang="en">venom</span></span></li><li class="cls" style="--c:rgb(255,110,180)"><span class="sq"></span><span class="cls-n"><span lang="es">rosa</span><span lang="en">pink</span></span><span class="dim"><span lang="es">vida</span><span lang="en">health</span></span></li><li class="cls" style="--c:rgb(40,210,225)"><span class="sq"></span><span class="cls-n"><span lang="es">cian</span><span lang="en">cyan</span></span><span class="dim"><span lang="es">defensa</span><span lang="en">defense</span></span></li><li class="cls" style="--c:rgb(72,66,88)"><span class="sq"></span><span class="cls-n"><span lang="es">negro</span><span lang="en">black</span></span><span class="dim"><span lang="es">azar</span><span lang="en">odds</span></span></li><li class="cls" style="--c:rgb(130,10,45)"><span class="sq"></span><span class="cls-n"><span lang="es">carmin</span><span lang="en">carmine</span></span><span class="dim"><span lang="es">robo de vida</span><span lang="en">lifesteal</span></span></li><li class="cls" style="--c:rgb(245,188,255)"><span class="sq"></span><span class="cls-n"><span lang="es">durazno</span><span lang="en">peach</span></span><span class="dim"><span lang="es">punteria</span><span lang="en">aim</span></span></li><li class="cls" style="--c:rgb(52,214,170)"><span class="sq"></span><span class="cls-n"><span lang="es">turquesa</span><span lang="en">turquoise</span></span><span class="dim"><span lang="es">velocidad</span><span lang="en">speed</span></span></li><li class="cls" style="--c:rgb(150,152,162)"><span class="sq"></span><span class="cls-n"><span lang="es">gris</span><span lang="en">gray</span></span><span class="dim"><span lang="es">contacto</span><span lang="en">contact</span></span></li></ul>
+</section>
+
+<section class="panel">
+  <h2><span lang="es">NOVEDADES</span><span lang="en">latest news</span></h2>
+  <div class="cards"><a class="card news" href="changelog.html#v0.33"><span class="chip">v0.33</span><span class="when">2026-11-11</span><span class="card-t">Got a Ping v0.33</span><span class="dim">MOMO DLC + REFINERIA</span></a></div>
+</section>
+</main>
+
+<footer class="foot">
+  <span>got a ping v0.33</span>
+  <span class="dim">amzthstudio - 2026</span>
+</footer>
+
+<script src="assets/game.js"></script>
+<script src="assets/bg.js"></script>
+<script src="assets/cube.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
