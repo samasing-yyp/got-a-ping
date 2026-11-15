@@ -23,11 +23,52 @@
   // ---- the backdrop: the menu's checker on the landing, diamonds on downloads (shops and treasure),
   // isometric cubes on the changelog (the sticker cube menu), rings rushing in while you hover a download
   const page = document.body.dataset.page;
-  if (window.BG) BG.want(page === 'downloads' ? 4 : (page === 'changelog' ? 3 : 0), null, page === 'changelog' ? 0.5 : 1);
+  if (window.BG) BG.want(page === 'downloads' ? 4 : (page === 'changelog' || page === 'wiki' ? 3 : 0), null, page === 'changelog' || page === 'wiki' ? 0.5 : 1);
   document.querySelectorAll('.dl:not(.off)').forEach(a => {
     a.addEventListener('mouseenter', () => BG.want(2, [255, 214, 90], -4));
     a.addEventListener('mouseleave', () => BG.want(page === 'downloads' ? 4 : 3, null, page === 'changelog' ? 0.5 : 1));
   });
+
+  // ---- the encyclopedia: search, a class and a rarity filter over the cards the page already has
+  const wq = document.getElementById('wiki-q');
+  if (wq) {
+    const tools = wq.closest('.wtools'), F = { cls: '', rar: '', q: '' };
+    tools.hidden = false;
+    const ph = () => { wq.placeholder = lang() === 'en' ? (wq.dataset.phEn || wq.placeholder) : (wq.dataset.phEs || wq.placeholder); };
+    wq.dataset.phEs = wq.placeholder;
+    ph();
+    lb && lb.addEventListener('click', ph);
+    function apply() {
+      const q = F.q.trim().toLowerCase();
+      let any = false;
+      document.querySelectorAll('.wcls').forEach(sec => {
+        let n = 0;
+        sec.querySelectorAll('.wstk').forEach(c => {
+          const ok = (!F.cls || c.dataset.cls === F.cls) && (!F.rar || c.dataset.rar === F.rar) && (!q || c.dataset.q.includes(q));
+          c.hidden = !ok; if (ok) n++;
+        });
+        sec.hidden = n === 0;
+        const k = sec.querySelector('.wcount'); if (k) k.textContent = n;
+        if (n) any = true;
+      });
+      let nh = 0;
+      document.querySelectorAll('.whero').forEach(c => {
+        c.hidden = !((!F.cls || c.dataset.cls === F.cls || c.dataset.faces.split(' ').includes(F.cls)) && (!q || c.dataset.q.includes(q)));
+        if (!c.hidden) nh++;
+      });
+      // the characters' panel goes when none of them match
+      document.getElementById('chars').hidden = nh === 0;
+      document.getElementById('wiki-none').hidden = any || nh > 0;
+    }
+    let qt = 0;
+    wq.addEventListener('input', () => { F.q = wq.value; clearTimeout(qt); qt = setTimeout(apply, 120); });
+    document.querySelectorAll('.wchip').forEach(b => b.addEventListener('click', () => {
+      const f = b.dataset.f, v = F[f] === b.dataset.v ? '' : b.dataset.v;
+      F[f] = v;
+      document.querySelectorAll('.wchip[data-f="' + f + '"]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === v)));
+      apply();
+    }));
+  }
 
   // ---- characters
   const box = document.getElementById('carousel');

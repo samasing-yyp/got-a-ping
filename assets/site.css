@@ -163,6 +163,49 @@ table { border-collapse: collapse; min-width: 100%; }
 th, td { text-align: left; padding: 6px 10px; border-bottom: var(--p) solid var(--line); vertical-align: top; }
 th { color: var(--gold); font-weight: normal; }
 
+/* ---------- encyclopedia: characters, then every sticker by class */
+.wtop .wjump { display: flex; gap: 4px; flex-wrap: wrap; margin: 8px 0; }
+.wtools { display: grid; gap: 10px; margin-top: 10px; }
+.wtools input { font: inherit; text-transform: lowercase; color: var(--ink); background: var(--floor); border: var(--p) solid var(--line); padding: 8px 10px; width: 100%; outline: none; }
+.wtools input:focus { border-color: var(--acc); }
+.wchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.wchip { font: inherit; text-transform: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: transparent; color: var(--dim); border: var(--p) solid var(--line); }
+.wchip i { width: 10px; height: 10px; background: var(--c); box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25); }
+.wchip:hover { color: #fff; }
+.wchip[aria-pressed="true"] { color: var(--lcd); background: var(--ink); border-color: var(--ink); }
+.wheroes { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.whero { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; align-items: start; padding: 12px; border: var(--p) solid var(--line); min-width: 0; }
+.whero:hover { border-color: var(--hc); }
+.wface { width: 96px; height: 96px; background: var(--floor); border: var(--p) solid var(--hc); display: block; }
+.whero .car-name { font-size: 24px; margin-bottom: 2px; }
+.wmeta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+.ref { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px 2px 2px; background: var(--floor); }
+.wlist { display: grid; }
+.wcls { border-color: var(--c); scroll-margin-top: 80px; }
+.whead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.whead h3 { margin: 0; font-size: 24px; color: var(--cl); }
+.whead .sq { width: 18px; height: 18px; background: var(--c); box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.25); }
+.wn { margin-left: auto; }
+.wbonus b { color: var(--ink); }
+.wgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 12px; }
+.wstk { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 4px 10px; align-content: start; padding: 10px; border: var(--p) solid var(--line); min-width: 0; }
+.wstk:hover { border-color: var(--c, var(--line)); }
+.wcls .wstk:hover { border-color: var(--cl); }
+.wname { color: var(--ink); overflow-wrap: anywhere; }
+.winfo { grid-column: 1 / -1; margin: 4px 0 0; color: #b4bac8; overflow-wrap: anywhere; }
+.wtag { grid-column: 1 / -1; color: var(--gold); }
+/* a sticker's tile: its class color, its art laid over it the way the game tints it */
+.tile { width: 34px; height: 34px; background: var(--c); display: block; box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.25); overflow: hidden; }
+.tile img { width: 100%; height: 100%; mix-blend-mode: multiply; display: block; }
+.tile.sm { width: 20px; height: 20px; box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25); }
+[hidden] { display: none !important; }
+@media (max-width: 600px) {
+  .wheroes, .wgrid { grid-template-columns: minmax(0, 1fr); }
+  .whero { grid-template-columns: 64px minmax(0, 1fr); gap: 10px; }
+  .wface { width: 64px; height: 64px; }
+  .wn { margin-left: 0; }
+}
+
 /* ---------- smaller screens: everything stacks, the handheld goes under the cube like in touch play */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
